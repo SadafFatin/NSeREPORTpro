@@ -1,4 +1,5 @@
 # NSeREPORTpro
+<<<<<<< HEAD
 ## Nutrition Sector Emergency Report for Program Operation 
 A smart data collection app with offline data collection and sync capacity.This is a specialized app for an Humanitarian organization.
 
@@ -20,3 +21,6 @@ Collects data in follwing sectors
 
 
 
+=======
+A smart data collection app with offline data collection and sync capacity.This is a specialized app for an Humanitarian organization
+>>>>>>> origin/master
