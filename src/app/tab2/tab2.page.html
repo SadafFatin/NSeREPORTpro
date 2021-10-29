@@ -1,17 +1,114 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
-  </ion-toolbar>
+<ion-header>
+    <ion-toolbar>
+        <ion-title>My Data
+        </ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+    <ion-toolbar mode="ios">
+        <ion-segment mode="ios" [(ngModel)]="segment">
+            <ion-segment-button value="local">
+                <ion-label>Local Data</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="remote">
+                <ion-label>Remote Data</ion-label>
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+
+    <ng-container *ngIf="segment=='local'; else elseTemplate">
+        <ion-card>
+            <ion-card-header color="dark">
+                <ion-card-title>Local Data Status</ion-card-title>
+                <ion-card-subtitle>Total <b>{{fwLocalDraftData?.length}}</b> items found in <b>{{facilityList?.length}}</b> facilities
+                </ion-card-subtitle>
+            </ion-card-header>
+
+            <ion-card-content>
+
+                <ion-item lines="none">
+                    <ion-icon name="sync-circle" slot="start"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                        <ng-container *ngIf="lastSynced; else elseTemplate">
+                            <h3>Last synced at: <b>{{lastSynced}}</b></h3>
+                            <h3>Synced draft data item : <b>{{localDataSyncedCount}}</b></h3>
+                        </ng-container>
+                        <ng-template #elseTemplate>
+                            <h2>Not synced yet</h2>
+                        </ng-template>
+                    </ion-label>
+                </ion-item>
+
+
+                <ion-button color="danger" (click)="deleteDraftData()" fill="clear">
+                    Clear draft data
+                    <ion-icon slot="end" name="trash"></ion-icon>
+                </ion-button>
+                <ion-button color="favorite" (click)="syncData()" fill="clear">
+                    Sync draft data
+                    <ion-icon slot="end" name="cloud-upload"></ion-icon>
+                </ion-button>
+            </ion-card-content>
+        </ion-card>
+    </ng-container>
+
+    <ng-template #elseTemplate>
+        <ion-list *ngFor="let facilityWiseDraftDataList of facilityWiseDraftData">
+            <ion-list-header>
+                {{facilityWiseDraftDataList.facility_name}}
+            </ion-list-header>
+            <ion-card *ngFor="let data of facilityWiseDraftDataList.fw_draft_data;let i = index">
+                <ion-card-header [color]="apiClient.getActivityColor(i)">
+                    <ion-card-title class="ion-text-center">
+                        <ion-icon src={{apiClient.getActivityIcon(i,storageService.getActivityName(data.activity_id))}}>
+                        </ion-icon>
+                        {{storageService.getActivityName(data.activity_detail_id)}}
+                    </ion-card-title>
+                    <ion-card-subtitle class="ion-text-center">
+                        {{storageService.getActivityDetailName(data.activity_detail_id)}}
+                    </ion-card-subtitle>
+                    <ion-card-subtitle class="ion-text-end">
+                        <p>Updated: {{data.updated_at | date:'mediumDate'}}</p>
+                        <p>Period: {{data.period }}</p>
+                        <p>Remarks: {{data.remarks}}</p>
+                    </ion-card-subtitle>
+                </ion-card-header>
+                <ion-card-content class="bg-card">
+                    <ion-chip [color]="apiClient.getActivityColor(i)">
+                        <ion-icon name="people"></ion-icon>
+                        <ion-label>Total Beneficiary {{data.reached_male+data.reached_female}}</ion-label>
+                    </ion-chip>
+                    <ion-chip [color]="apiClient.getActivityColor(i)" outline>
+                        <ion-icon name="woman"></ion-icon>
+                        <ion-label>Female {{data.reached_female}}</ion-label>
+                    </ion-chip>
+                    <ion-chip [color]="apiClient.getActivityColor(i)">
+                        <ion-icon name="man"></ion-icon>
+                        <ion-label>Male {{data.reached_male}}</ion-label>
+                    </ion-chip>
+
+                    <ion-buttons>
+                        <ion-button>
+                            <ion-icon slot="icon-only" name="create"></ion-icon>
+                        </ion-button>
+                        <ion-button color="danger" (click)="deleteDraftData()">
+                            <ion-icon slot="icon-only" name="trash"></ion-icon>
+                        </ion-button>
+                        <ion-button color="warning">
+                            <ion-icon slot="icon-only" name="cloud-upload"></ion-icon>
+                        </ion-button>
+                    </ion-buttons>
+                </ion-card-content>
+            </ion-card>
+        </ion-list>
+    </ng-template>
+
 </ion-content>
+
+<!--app-draft-data [fwLocalDraftData]="fwLocalDraftData"></app-draft-data-->
+<!--app-explore-container></!--app-explore-container-->

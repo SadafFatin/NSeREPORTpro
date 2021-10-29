@@ -1,5 +1,7 @@
 {
-  "name": "NutritionSector",
-  "integrations": {},
-  "type": "angular"
+    "name": "NSeREPORTpro",
+    "integrations": {
+        "capacitor": {}
+    },
+    "type": "angular"
 }
