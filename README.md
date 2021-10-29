@@ -10,18 +10,9 @@ Collects data in follwing sectors
 ![Nutrition Sector Emergency Report for Program Operation](resources/app_resources/NS-LOGO-1350X558.png?raw=true "Title")
 
 
-![Activity](resources/app_resources/fwnsappfinaliconssvgformat/BSFP.svg?raw=true "Title") ![Activity] (resources/app_resources/fwnsappfinaliconssvgformat/Crosscutting analytics.svg
-?raw=true "Title") ![Activity](resources/app_resources/fwnsappfinaliconssvgformat/Disability.svg
-?raw=true "Title") ![Activity](resources/app_resources/fwnsappfinaliconssvgformat/ECCD.svg
-?raw=true "Title") ![Activity](resources/app_resources/fwnsappfinaliconssvgformat/Host Community Analysis.svg
-?raw=true "Title") ![Activity](resources/app_resources/fwnsappfinaliconssvgformat/IYCF.svg
-?raw=true "Title") ![Activity](resources/app_resources/fwnsappfinaliconssvgformat/JRP Key Indicator.svg
-?raw=true "Title") ![Activity](resources/app_resources/fwnsappfinaliconssvgformat/MAM.svg
-?raw=true "Title") ![Activity](resources/app_resources/fwnsappfinaliconssvgformat/MPHSS.svg
-?raw=true "Title") ![Activity](resources/app_resources/fwnsappfinaliconssvgformat/Micro Nutritinent Supplement.svg
-?raw=true "Title") ![Activity](resources/app_resources/fwnsappfinaliconssvgformat/Partner Presence.svg
-?raw=true "Title")  ![Activity](resources/app_resources/fwnsappfinaliconssvgformat/SAM.svg
-?raw=true "Title")
+![Activity](resources/app_resources/fwnsappfinaliconssvgformat/BSFP.svg?raw=true "Title")
+![Activity](resources/app_resources/fwnsappfinaliconssvgformat/Crosscutting%20analytics.svg?raw=true "Title") 
+![Activity](resources/app_resources/fwnsappfinaliconssvgformat/Disability.svg?raw=true "Title") ![Activity](resources/app_resources/fwnsappfinaliconssvgformat/ECCD.svg?raw=true "Title") ![Activity](resources/app_resources/fwnsappfinaliconssvgformat/Host%20Community %20Analysis.svg?raw=true "Title") ![Activity](resources/app_resources/fwnsappfinaliconssvgformat/IYCF.svg?raw=true "Title") ![Activity](resources/app_resources/fwnsappfinaliconssvgformat/JRP%20Key%20Indicator.svg?raw=true "Title") ![Activity](resources/app_resources/fwnsappfinaliconssvgformat/MAM.svgraw=true "Title") ![Activity](resources/app_resources/fwnsappfinaliconssvgformat/MPHSS.svg?raw=true "Title") ![Activity](resources/app_resources/fwnsappfinaliconssvgformat/Micro%20Nutritinent%20Supplement.svg?raw=true "Title") ![Activity](resources/app_resources/fwnsappfinaliconssvgformat/Partner%20Presence.svg?raw=true "Title")  ![Activity](resources/app_resources/fwnsappfinaliconssvgformat/SAM.svgraw=true "Title")
 
  
 
