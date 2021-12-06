@@ -1,5 +1,4 @@
-import { Facility } from './user-options';
-import { ActivityDetail } from "./fwdata";
+import { ActivityDetail, FWRemoteDraftData } from "./fwdata";
 
 
 export class FWLocalDraftData {
@@ -11,10 +10,8 @@ export class FWLocalDraftData {
   updated_at: Date;
   facility_id: string;
   activity_detail: ActivityDetail;
-  synced:boolean = false;
-
-
-
+  synced?:boolean = false;
+  sync_id?: any = null;
 
 
   constructor(data: ActivityDetail, updated_at: Date, created_at: Date, period: string,
@@ -30,6 +27,23 @@ export class FWLocalDraftData {
       this.year = year;
       this.facility_id = facility;
   }
+
+
+  constructFromRemoteObject(fwRemoteDraft: FWRemoteDraftData){
+
+    this.period = fwRemoteDraft.period;
+    this.updated_at = this.updated_at;
+    this.remarks = fwRemoteDraft.remarks;
+    this.month = fwRemoteDraft.month;
+    this.year = this.year;
+    this.activity_detail.female_value = fwRemoteDraft.reached_female;
+    this.activity_detail.male_value = fwRemoteDraft.reached_male;
+
+
+
+
+  }
+
 
 
 

@@ -1,6 +1,12 @@
 import { GenericServerResponse } from 'src/app/interfaces/common';
+
+
+
+/**
+ * Submission Related Data models
+ */
 export interface FWSubmissionRelatedDataApiResponse extends GenericServerResponse{
-  data:    FWSubmissionRelatedApiData;
+  data: FWSubmissionRelatedApiData;
 
 }
 
@@ -10,6 +16,10 @@ export interface FWSubmissionRelatedApiData {
   activity:         Activity[];
 }
 
+
+/**
+ * List of all available activities and activities detail
+ */
 export interface ActivityListApiResponse extends GenericServerResponse{
   data:ActivityListData;
 }
@@ -17,15 +27,17 @@ export interface ActivityListApiResponse extends GenericServerResponse{
 export interface ActivityListData{
   activities: Activity[];
   activity_details: ActivityDetail[];
-
 }
 
+
+/**
+ * Grouped activity detail
+ */
 export interface GroupByActivityDetailsApiResponse extends GenericServerResponse{
   data: {data: GroupedActivityDetailsData[]};
 }
 
 export class GroupedActivityDetailsData{
-
     activity_detail_name: string;
     activity_detail_id: number;
     period: string;
@@ -44,14 +56,21 @@ export class GroupedActivityDetailsData{
       this.reached_female = reached_female;
     }
 
-
-
-
-
 }
 
 
 
+/**
+ * Remote DraftData API
+ */
+export interface FWDraftApiResponse extends GenericServerResponse{
+  data: FWRemoteDraftData[];
+}
+
+
+/**
+ * Base models like Activity,ActivityDetail ...
+ */
 export interface Activity {
     id:         number;
     name:       string;
@@ -62,20 +81,15 @@ export interface Activity {
 }
 
 export interface ActivityDetail {
-  id:          number;
+  id?:          number;
   name:        string;
   activity_id: number;
-  created_at:  Date;
-  updated_at:  Date;
+  created_at?:  Date;
+  updated_at?:  Date;
   male_value:number;
   female_value:number;
   pivot?:      Pivot;
 }
-
-
-
-
-
 
 
 export interface Pivot {
@@ -100,14 +114,7 @@ export interface FacilityInfo {
   activity_details: ActivityDetail[];
 }
 
-
-export interface FWDraftApiResponse {
-  success: boolean;
-  data:    FWDraftData[];
-  message: string;
-}
-
-export interface FWDraftData{
+export interface FWRemoteDraftData{
 
   id: number;
   period: string;
@@ -122,6 +129,8 @@ export interface FWDraftData{
   remarks: string;
   created_at: string;
   updated_at: string;
+  sync_id?: any;
+  synced?: any;
 }
 
 

@@ -1,4 +1,5 @@
 import { GenericServerResponse } from "./common";
+import { Pivot } from "./fwdata";
 
 export interface UserOptions {
   useremail: string;
@@ -63,12 +64,4 @@ export interface FacilitiesApiResponse extends GenericServerResponse{
 
 
 
-
-
-
-
-export interface Pivot{
-  user_id:     number;
-  facility_id: number;
-}
 

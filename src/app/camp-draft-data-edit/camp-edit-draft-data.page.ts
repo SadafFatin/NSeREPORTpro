@@ -42,6 +42,7 @@ export class CampEditDraftDataPage implements OnInit {
       this.fwLocalDraftData.updated_at = new Date();
       let date: Date = new Date(this.period);
       this.fwLocalDraftData.period = date.getMonth()+1 + '-' + date.getFullYear();
+      this.fwLocalDraftData.synced = false;
       console.log(this.fwLocalDraftData);
       await this.userData.editFacilityLocalDraftDataItemByIndex(this.facility_id,this.index,this.fwLocalDraftData);
       this.ionLoader.presentToast('Edited Successfully.');

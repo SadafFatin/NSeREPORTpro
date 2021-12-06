@@ -18,9 +18,6 @@ export class CampSubmissionPage implements OnInit {
 
   facility: Facility;
   fwDraftSubmissionData: FWSubmissionRelatedApiData;
-
-
-
   activity_details:ActivityDetail[];
 
 

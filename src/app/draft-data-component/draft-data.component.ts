@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { IonRouterOutlet, ModalController } from '@ionic/angular';
 import { CampDraftdataFinalProcessPage } from '../camp-draftdata-grouped-final-upload/camp-draftdata-final-process.page';
 import { CampEditDraftDataPage } from '../camp-draft-data-edit/camp-edit-draft-data.page';
-import { FWDraftData } from '../interfaces/fwdata';
+import { FWRemoteDraftData } from '../interfaces/fwdata';
 import { FWLocalDraftData } from '../interfaces/fwlocalDB';
 import { Facility } from '../interfaces/user-options';
 import { LoaderService } from '../providers/loader.service';
@@ -19,7 +19,7 @@ export class DraftDataComponent implements OnInit {
 
 
   @Input() facility: Facility;
-  @Input() fwdraftData: FWDraftData[];
+  @Input() fwdraftData: FWRemoteDraftData[];
   @Input() fwLocalDraftData: FWLocalDraftData[];
 
 

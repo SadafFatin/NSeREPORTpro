@@ -1,3 +1,5 @@
+import { GenericServerResponse } from './../../interfaces/common';
+import { FWSubmissionRelatedApiData } from './../../interfaces/fwdata';
 import { UserData } from './../../providers/user-data';
 import { FWDraftApiResponse, FWSubmissionRelatedDataApiResponse, ActivityDetail, ActivityListApiResponse, GroupByActivityDetailsApiResponse, GroupedActivityDetailsData } from '../../interfaces/fwdata';
 import { UserLoginApiResponse, UserOptions, Facility, FacilitiesApiResponse } from './../../interfaces/user-options';
@@ -8,7 +10,6 @@ import { catchError, first, map, tap } from 'rxjs/operators';
 import { StorageService } from '../stored-data/storage.service';
 import { LoaderService } from '../../providers/loader.service';
 import * as apiUrls from '../../interfaces/url';
-import { GenericServerResponse, LocalData } from 'src/app/interfaces/common';
 import { FWFinalDataApiResponse } from 'src/app/interfaces/fwfinal';
 import { FWLocalDraftData } from 'src/app/interfaces/fwlocalDB';
 
@@ -44,7 +45,7 @@ export class ApiClientService {
 
   //** Get facilities of user */
   getFacilities(user_id: any): Promise<FacilitiesApiResponse> {
-    let url = apiUrls.dataBaseUrl+"facilitiesList/"+user_id;
+    let url = apiUrls.dataBaseUrl+"facilities_list/"+user_id;
     return this.httpClient.get(url)
       .pipe(
         map((serverResponse: FacilitiesApiResponse) => {
@@ -55,6 +56,7 @@ export class ApiClientService {
         }),
         catchError(async (error: any) => {
           const value  =  await this.retrieveFacilities();
+          console.log('sending saved version', value);
           return value;
         })
       ).toPromise();
@@ -72,7 +74,7 @@ export class ApiClientService {
 
   /** load all Activities */
   loadActivitiesAndDetails(): Promise<ActivityListApiResponse> {
-    let url = apiUrls.dataBaseUrl + "activityDetails";
+    let url = apiUrls.dataBaseUrl + "activity_details";
     return this.httpClient.get(url)
       .pipe(
         map((serverResponse: ActivityListApiResponse) => {
@@ -104,7 +106,7 @@ export class ApiClientService {
   }
 
 
-  /** load Activities for 4W draft submission */
+  /** load Activities and Submission Data for 4W draft submission */
   loadFWSubmissionRelatedDataByFacility(facility_id: number): Promise<FWSubmissionRelatedDataApiResponse> {
     let url = apiUrls.dataBaseUrl + "fwdraft_submission/" + facility_id;
     return this.httpClient.get(url)
@@ -113,14 +115,25 @@ export class ApiClientService {
           return serverResponse;
         }),
         tap(async (response: FWSubmissionRelatedDataApiResponse) => {
-
+          this.saveSubmissionData(response.data);
         }),
-        catchError((error: any) => {
-          this.handleError(error);
-          return [];
+        catchError(async (error: any) => {
+          const value  =  await this.retrieveSubmissionData(facility_id);
+          console.log('sending saved version', value);
+          return new GenericServerResponse(true,"Something went wrong!",value);
         })
       ).toPromise();
   }
+
+  async saveSubmissionData(response:FWSubmissionRelatedApiData){
+    this.userData.saveFacilitiesSubmissionData(response);
+  }
+
+  async retrieveSubmissionData(facility_id):Promise<FWSubmissionRelatedApiData>{
+    const value = await this.userData.getSavedFacilitiesSubmissionData(facility_id);
+    return value;
+  }
+
 
   /** load previous draft data of a facility */
   loadFWPrevDraftDataByFacility(facility_id: number): Promise<FWDraftApiResponse> {
@@ -176,8 +189,6 @@ export class ApiClientService {
     remarks: string, reporting_period: string,
     activity_details: ActivityDetail[])
     : Promise<GenericServerResponse> {
-
-
     const data = await this.userData.getDraftDataFromStorageByFacility(facility_id);
     console.log(data);
     if (data) {
@@ -231,35 +242,37 @@ export class ApiClientService {
   async uploadFWLocalDraftDataInServer(user_id: string,fwLocalDraftData: FWLocalDraftData[])
     : Promise<GenericServerResponse> {
 
+    let endpoint = "fwdraft_data_sync?";
+    let firstPart = "activity_detail_id[0]=" + fwLocalDraftData[0].activity_detail.id + "&reached_female[0]=" +fwLocalDraftData[0].activity_detail.female_value + "&reached_male[0]=" + fwLocalDraftData[0].activity_detail.male_value + "&remarks[0]=" + fwLocalDraftData[0].remarks + "&facility_id[0]=" + fwLocalDraftData[0].facility_id + "&user_id=" + user_id + "&";
+    let reporting_month_part = "reporting_month[0]=" + fwLocalDraftData[0].period+"&";
 
-     return null;
-
-    /*let firstPart = "fwdraft_api?reporting_month=" + reporting_period + "&activity_detail_id[0]=" + activity_details[0].id + "&reached_female[0]=" + activity_details[0].female_value + "&reached_male[0]=" + values[0].reachedMale + "&remarks=" + remarks + "&facility_id=" + facility_id + "&user_id=" + user_id + "&";
     let activity_id_part = "";
     let male_value_part = "";
     let female_value_part = "";
+    let remarks_part = "";
+    let facility_id_part = "";
 
-    for (let i = 1; i < activity_details.length; i++) {
-      activity_id_part = activity_id_part + "activity_detail_id[" + i + "]=" + activity_details[i].id + "&";
-      male_value_part = male_value_part + "reached_male[" + i + "]=" + activity_details[i].male_value + "&";
-      female_value_part = female_value_part + "reached_female[" + i + "]=" + activity_details[i].female_value + "&";
+    for (let i = 1; i < fwLocalDraftData.length; i++) {
+      reporting_month_part = reporting_month_part+`reporting_month[${i}]=${fwLocalDraftData[0].period}`+"&";
+      activity_id_part = activity_id_part + "activity_detail_id[" + i + "]=" + fwLocalDraftData[i].activity_detail.id + "&";
+      male_value_part = male_value_part + "reached_male[" + i + "]=" + fwLocalDraftData[i].activity_detail.male_value + "&";
+      female_value_part = female_value_part + "reached_female[" + i + "]=" + fwLocalDraftData[i].activity_detail.female_value + "&";
+      remarks_part = remarks_part + "remarks[" + i + "]=" + fwLocalDraftData[i].remarks + "&";
+      facility_id_part = facility_id_part + "facility_id[" + i + "]=" + fwLocalDraftData[i].facility_id + "&";
     }
-    male_value_part = male_value_part.substr(0, male_value_part.length - 1);
-    let url = apiUrls.dataBaseUrl + firstPart + activity_id_part + female_value_part + male_value_part;
+    facility_id_part = facility_id_part.substr(0, facility_id_part.length - 1);
+    let url = apiUrls.dataBaseUrl+endpoint+reporting_month_part+firstPart+activity_id_part+female_value_part+male_value_part+remarks_part+facility_id_part;
     return this.httpClient.post(url, {})
       .pipe(
         map((serverResponse: GenericServerResponse) => {
           this.ionLoader.presentToast(serverResponse.message);
           return serverResponse;
         }),
-        tap(async (response: GenericServerResponse) => {
-
-        }),
         catchError((error: any) => {
           this.handleError(error);
           return [];
         })
-      ).toPromise();*/
+      ).toPromise();
 
   }
 
@@ -285,7 +298,6 @@ export class ApiClientService {
           return serverResponse;
         }),
         tap(async (response: GenericServerResponse) => {
-
         }),
         catchError((error: any) => {
           this.handleError(error);

@@ -1,7 +1,7 @@
-export interface FWFinalDataApiResponse{
-  success: boolean;
+import { GenericServerResponse } from 'src/app/interfaces/common';
+
+export interface FWFinalDataApiResponse extends GenericServerResponse{
   data:    FWFinalData[];
-  message: string;
 }
 
 export interface FWFinalData{

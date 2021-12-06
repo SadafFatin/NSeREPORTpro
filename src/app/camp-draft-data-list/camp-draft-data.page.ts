@@ -1,4 +1,4 @@
-import { FWDraftData } from '../interfaces/fwdata';
+import { FWRemoteDraftData } from '../interfaces/fwdata';
 import { CampDraftdataFinalProcessPage } from '../camp-draftdata-grouped-final-upload/camp-draftdata-final-process.page';
 import { CampEditDraftDataPage } from '../camp-draft-data-edit/camp-edit-draft-data.page';
 import { LoaderService } from '../providers/loader.service';
@@ -20,7 +20,7 @@ export class CampDraftDataPage implements OnInit {
 
 
   facility: Facility;
-  fwdraftData: FWDraftData[];
+  fwdraftData: FWRemoteDraftData[];
   fwLocalDraftData: FWLocalDraftData[];
 
 

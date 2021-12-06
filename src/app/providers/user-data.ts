@@ -2,7 +2,7 @@ import { FWLocalDraftData } from 'src/app/interfaces/fwlocalDB';
 import { UserLoginApiData, Facility, FacilitiesApiResponse } from './../interfaces/user-options';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { ActivityListApiResponse } from '../interfaces/fwdata';
+import { ActivityListApiResponse, FWSubmissionRelatedApiData } from '../interfaces/fwdata';
 
 
 @Injectable({
@@ -18,6 +18,8 @@ export class UserData {
   ACTIVITIES_LIST = 'activities_list';
   FACILITIES_RESP: string = 'facilities_list';
   LAST_SYNCED: string = 'last_synced';
+  FACILITIES_SUBMISSION_ACTIVITIES: string = 'facility_activities';
+
 
 
 
@@ -133,6 +135,29 @@ export class UserData {
     const data = <FacilitiesApiResponse>value;
     return data;
   }
+
+
+  /**Save and retrieve submission data of facilities */
+
+  saveFacilitiesSubmissionData(response: FWSubmissionRelatedApiData) {
+    return this.storage.set(this.FACILITIES_SUBMISSION_ACTIVITIES+response.facility_info.id, response);
+  }
+
+  async getSavedFacilitiesSubmissionData(facility_id:any): Promise<FWSubmissionRelatedApiData> {
+    const value = await this.storage.get(this.FACILITIES_SUBMISSION_ACTIVITIES+facility_id);
+    const data = <FWSubmissionRelatedApiData>value;
+    return data;
+  }
+
+
+
+
+
+
+
+
+
+
 
 
 

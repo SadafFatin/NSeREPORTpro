@@ -14,7 +14,9 @@ export class GenericServerResponse {
   }
 }
 
-
+/**
+ * For experiments
+ */
 export interface LocalData{
   loginData: UserLoginApiResponse,
   fwdraft_submission: FWSubmissionRelatedDataApiResponse,

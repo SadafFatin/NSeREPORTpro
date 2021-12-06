@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { LoadingController, ToastController, AlertController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +19,8 @@ export class LoaderService{
   isPresenting: boolean = false;
   loader: HTMLIonLoadingElement;
 
-
   constructor(
-    public loadingController: LoadingController, public toastController: ToastController
+    public loadingController: LoadingController,public alertController:AlertController,public toastController: ToastController
   ) {
 
     this.inIt();
@@ -132,6 +131,40 @@ async createAsyncLoader():Promise<HTMLIonLoadingElement> {
 
     const { role } = await toast.onDidDismiss();
     console.log('onDidDismiss resolved with role', role);
+  }
+
+
+  async presentAlertConfirm(title:any,message:any) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: message,
+      buttons: [
+         {
+          text: 'OK',
+          handler: () => {
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async presentAlertConfirmCallback(title:any,message:any,callback) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: message,
+      buttons: [
+         {
+          text: 'OK',
+          handler: () => {
+            callback('OK')
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 

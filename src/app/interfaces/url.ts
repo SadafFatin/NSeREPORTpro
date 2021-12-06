@@ -1,3 +1,3 @@
-export const authBaseUrl = "http://www.nscxb.org/api/login?";
-export const dataBaseUrl = "http://www.nscxb.org/api/v1/";
+export const authBaseUrl = "https://www.nscxb.org/api/login?";
+export const dataBaseUrl = "https://www.nscxb.org/api/v1/";
 
