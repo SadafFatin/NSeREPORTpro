@@ -22,6 +22,10 @@ Collects data in follwing sectors
 ![Activity](resources/app_resources/fwnsappfinaliconssvgformat/MPHSS.svg?raw=true "Title") 
 ![Activity](resources/app_resources/fwnsappfinaliconssvgformat/Micro%20Nutritinent%20Supplement.svg?raw=true "Title") 
 ![Activity](resources/app_resources/fwnsappfinaliconssvgformat/Partner%20Presence.svg?raw=true "Title") 
+<<<<<<< HEAD
 ![Activity](resources/app_resources/fwnsappfinaliconssvgformat/SAM.svgraw=true "Title")
 
  
+=======
+![Activity](resources/app_resources/fwnsappfinaliconssvgformat/SAM.svg?raw=true "Title")
+>>>>>>> dae6ee86017f6e7bd24fbc4309c10df0509952ac
